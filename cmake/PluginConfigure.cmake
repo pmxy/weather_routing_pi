@@ -127,6 +127,8 @@ if(UNIX AND NOT APPLE)
         set(PKG_TARGET_ARCH "-armhf")
     elseif(ARCH MATCHES "i386")
         set(PKG_TARGET_ARCH "-i386")
+    elseif (ARCH MATCHES "aarch64")
+        set(PKG_TARGET_ARCH "-aarch64")
     else()
         set(PKG_TARGET_ARCH "-x86_64")
     endif()
@@ -251,7 +253,7 @@ set(wxWidgets_USE_LIBS
 option(USE_GL "Enable OpenGL support" ON)
 
 # Search for opengles, short of running a program to test the speed of acceleration, I simply use gles on "native linux" arm systems
-if(ARCH MATCHES "arm*"
+if(ARCH MATCHES "arm+"
    AND (NOT QT_ANDROID)
    AND USE_GL MATCHES "ON")
     find_path(OPENGLESv1_INCLUDE_DIR GLES/gl.h)
@@ -264,7 +266,7 @@ if(ARCH MATCHES "arm*"
         set(OPENGL_FOUND "YES")
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
-        add_subdirectory(src/glshim)
+ #       add_subdirectory(src/glshim)
 
         set(OPENGL_LIBRARIES "GL_static" "EGL" "X11" "drm")
     endif()
